@@ -91,8 +91,13 @@ const SurveyForm = () => {
     const handleSubmit = () => {
       // Modificar el manejo de respuestas para preguntas de tipo 'choice'
       const updatedAnswers = {};
+      questions.forEach((question) => {
+        const answer = answers[question.id] || ''; // Tomar la respuesta o cadena vacía si no hay respuesta
+        updatedAnswers[question.id] = answer;
+      });
       Object.keys(answers).forEach((questionId) => {
         const question = questions.find((q) => q.id.toString() === questionId);
+
         if (question && ['choice', 'select'].includes(question.type)) {
           updatedAnswers[questionId] = answers[questionId] || []; // Tomar el array de opciones seleccionadas o un array vacío
         } else {
@@ -199,7 +204,10 @@ const SurveyForm = () => {
             </Grid>
           )}
   
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button variant="contained" color="primary" onClick={handleSubmit}
+            style={{
+              marginTop: 40,
+            }}>
             Enviar Respuestas
           </Button>
   
