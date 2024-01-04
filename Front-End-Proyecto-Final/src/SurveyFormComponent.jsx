@@ -21,7 +21,20 @@ import AddIcon from '@mui/icons-material/Add';
 // ... (importaciones)
 
 const SurveyForm = () => {
-    const [questions, setQuestions] = useState([]);
+  //Preguntas de mock
+  const newQuestion1 = {
+    id: 1,
+    label: `Pregunta 1`,
+    type: 'select',
+    options: ['Opción 1', 'Opción 2', 'Opción 3'],
+  };
+  const newQuestion2 = {
+    id: 2,
+    label: `Pregunta 2`,
+    type: 'text',
+  };
+    const [questions, setQuestions] = useState([newQuestion1,newQuestion2]);
+    
     const [showFirstQuestion, setShowFirstQuestion] = useState(false);
     const [answers, setAnswers] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
@@ -85,6 +98,7 @@ const SurveyForm = () => {
         };
       }
       setQuestions((prevQuestions) => [...prevQuestions, newQuestion]);
+      //setQuestions((newQuestion1) => [...newQuestion1,newQuestion2]);
       setShowFirstQuestion(true);
     };
   
@@ -104,7 +118,6 @@ const SurveyForm = () => {
           updatedAnswers[questionId] = answers[questionId];
         }
       });
-  
       console.log('Respuestas enviadas:', updatedAnswers);
     };
   
@@ -187,7 +200,7 @@ const SurveyForm = () => {
   </FormControl>
 )}
 
-                  {question.type === 'calendar' && (
+                  {/* {question.type === 'calendar' && (
                     <TextField
                       label={question.label}
                       type="date"
@@ -198,7 +211,7 @@ const SurveyForm = () => {
                       }}
                       onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                     />
-                  )}
+                  )} */}
                 </Grid>
               ))}
             </Grid>
