@@ -32,13 +32,21 @@ const SurveyForm = () => {
     id: 2,
     label: `Pregunta 2`,
     type: 'text',
+    options: [''],
   };
-    const [questions, setQuestions] = useState([newQuestion1,newQuestion2]);
-    
-    const [showFirstQuestion, setShowFirstQuestion] = useState(false);
+  //Seccion de parseo, puedo reibir una ista de objetos en formato JSON y usarlos como estado por defecto
+  const arreglo = [newQuestion1,newQuestion2];
+  const arreglostring = JSON.stringify(arreglo);
+  const arregloparsed = JSON.parse(arreglostring);
+  //console.log("Arreglo String:" ,{arreglostring});
+
+  //
+    const [questions, setQuestions] = useState(arregloparsed);
+    const [showFirstQuestion, setShowFirstQuestion] = useState(true);
     const [answers, setAnswers] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
   
+    //setQuestions(JSON.parse(nqstr1));
     const handleAnswerChange = (questionId, answer) => {
         setAnswers((prevAnswers) => {
           const updatedAnswers = { ...prevAnswers };
@@ -119,8 +127,19 @@ const SurveyForm = () => {
         }
       });
       console.log('Respuestas enviadas:', updatedAnswers);
+      //guardado
+      //importa FileSystem de Node.js
+      const fs = require('fs');
+      // Convierte la lista de objetos a formato JSON
+        const jsonString = JSON.stringify(questions, null, 2); // El segundo parámetro (null) y el tercer parámetro (2) son opciones para dar formato al JSON
+
+    // Nombre del archivo y ruta (puedes ajustar la ruta y el nombre según tus necesidades)
+    const fileName = "datalist.json";
+
+    // Escribe el JSON en un archivo
+    fs.writeFileSync(fileName, jsonString, 'utf-8');
     };
-  
+    
     return (
       <Container component="main" maxWidth="md">
         <Paper
