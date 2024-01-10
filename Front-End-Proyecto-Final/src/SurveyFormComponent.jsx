@@ -41,7 +41,7 @@ const SurveyForm = () => {
   //console.log("Arreglo String:" ,{arreglostring});
 
   //
-    const [questions, setQuestions] = useState(arregloparsed);
+    const [questions, setQuestions] = useState([]);
     const [showFirstQuestion, setShowFirstQuestion] = useState(true);
     const [answers, setAnswers] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
@@ -68,8 +68,6 @@ const SurveyForm = () => {
         });
       };
       
-      
-  
     const handleTypeMenuOpen = (event) => {
       setAnchorEl(event.currentTarget);
     };
@@ -127,17 +125,48 @@ const SurveyForm = () => {
         }
       });
       console.log('Respuestas enviadas:', updatedAnswers);
-      //guardado
-      //importa FileSystem de Node.js
-      const fs = require('fs');
-      // Convierte la lista de objetos a formato JSON
-        const jsonString = JSON.stringify(questions, null, 2); // El segundo parámetro (null) y el tercer parámetro (2) son opciones para dar formato al JSON
+    };
+    const handleDownload = () => {
+    //guardado
+    
+    // Convierte la lista de objetos a formato JSON
+    const jsonString = JSON.stringify(questions, null, 2); // El segundo parámetro (null) y el tercer parámetro (2) son opciones para dar formato al JSON
+    // Crea un objeto Blob con el contenido JSON
+  const blob = new Blob([jsonString], { type: 'application/json' });
 
-    // Nombre del archivo y ruta (puedes ajustar la ruta y el nombre según tus necesidades)
-    const fileName = "datalist.json";
+  // Crea un enlace (a) para descargar el archivo
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'data.json';
 
-    // Escribe el JSON en un archivo
-    fs.writeFileSync(fileName, jsonString, 'utf-8');
+  // Simula un clic en el enlace para iniciar la descarga
+  link.click();
+  setQuestions([]);
+};
+
+    const [dataReader, setDataReader] = useState(null);
+  
+    const handleFileInputChange = (event) => {
+      const file = event.target.files[0];
+  
+      if (file) {
+        const reader = new FileReader();
+  
+        reader.onload = (e) => {
+          try {
+            const jsonData = JSON.parse(e.target.result);
+            setDataReader(jsonData);
+            console.log("Datos JSON:",jsonData);
+            setQuestions(jsonData);
+          } catch (error) {
+            console.error('Error al parsear el archivo JSON:', error);
+          }
+        };
+        
+        reader.readAsText(file);
+        //console.log("Datos obtenidos:",reader);
+      }
+      //console.log(dataReader);
     };
     
     return (
@@ -162,14 +191,14 @@ const SurveyForm = () => {
                 <Grid item xs={12} key={question.id}>
                   {question.type === 'text' && (
                     <TextField
-                      label={question.label}
-                      fullWidth
-                      margin="normal"
-                      variant="outlined"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                    label={question.label}
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                     />
                   )}
                   {['choice', 'radio'].includes(question.type) && (
@@ -181,8 +210,8 @@ const SurveyForm = () => {
                           control={
                             question.type === 'choice' ? (
                               <Checkbox
-                                checked={answers[question.id]?.includes(option) || false}
-                                onChange={() => {
+                              checked={answers[question.id]?.includes(option) || false}
+                              onChange={() => {
                                   const selectedOptions = answers[question.id] || [];
                                   const updatedOptions = selectedOptions.includes(option)
                                     ? selectedOptions.filter((o) => o !== option)
@@ -192,13 +221,13 @@ const SurveyForm = () => {
                               />
                             ) : (
                               <Radio
-                                checked={answers[question.id] === option}
-                                onChange={() => handleAnswerChange(question.id, option)}
+                              checked={answers[question.id] === option}
+                              onChange={() => handleAnswerChange(question.id, option)}
                               />
                             )
                           }
                           label={option}
-                        />
+                          />
                       ))}
                     </FormControl>
                   )}
@@ -221,14 +250,14 @@ const SurveyForm = () => {
 
                   {/* {question.type === 'calendar' && (
                     <TextField
-                      label={question.label}
-                      type="date"
-                      fullWidth
-                      margin="normal"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                    label={question.label}
+                    type="date"
+                    fullWidth
+                    margin="normal"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                     />
                   )} */}
                 </Grid>
@@ -236,13 +265,20 @@ const SurveyForm = () => {
             </Grid>
           )}
   
+              {/* boton descarga */}
+          <Button variant="contained" color="primary" onClick={handleDownload}
+            style={{
+              marginTop: 40,
+            }}>
+            Guardar Encuesta
+          </Button>
           <Button variant="contained" color="primary" onClick={handleSubmit}
             style={{
               marginTop: 40,
             }}>
             Enviar Respuestas
           </Button>
-  
+            
           <Fab
             color="primary"
             aria-label="add"
@@ -267,7 +303,12 @@ const SurveyForm = () => {
             <MenuItem onClick={() => handleTypeMenuItemClick('select')}>Seleccionar</MenuItem>
             <MenuItem onClick={() => handleTypeMenuItemClick('calendar')}>Calendario</MenuItem>
           </Menu>
+                  
         </Paper>
+        <Paper><p>Cargar una encuesta JSON</p>
+            <div>
+             <input type="file" onChange={handleFileInputChange}/>
+           </div></Paper>
       </Container>
     );
   };
