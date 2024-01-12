@@ -1,7 +1,7 @@
 Front-End:
-	Node.js
+	Node.js 20
 	npm
 Back-End:
-	php 8.2.7
+	--Nada por el momento
 Base de Datos:
-	--Nda por el momento
+	--Nada por el momento
