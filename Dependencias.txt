@@ -4,3 +4,4 @@ Front-End:
 Back-End:
 	php 8.2.7
 Base de Datos:
+	--Nda por el momento
