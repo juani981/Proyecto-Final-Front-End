@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import SurveyForm from './SurveyFormComponent.jsx'
-import SurveyFormCreator from './SurveyFormCreator.jsx'
-import './index.css'
+import SurveyDisplayComponent from './components/SurveyDisplayComponent.jsx'
+import SurveyCreatorComponent from './components/SurveyCreatorComponent.jsx'
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <SurveyForm></SurveyForm>
+    <SurveyCreatorComponent></SurveyCreatorComponent>
+ 
   </React.StrictMode>,
 )
