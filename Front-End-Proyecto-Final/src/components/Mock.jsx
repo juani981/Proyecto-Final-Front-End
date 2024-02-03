@@ -16,6 +16,8 @@ export const Mock = () => {
         fetchData();
       }, []);
   return (
-    <></>
+    <>
+    Esto es un Mock
+    </>
   )
 }

@@ -1,24 +1,21 @@
 import { TextField } from "@mui/material";
 
-export const TextTypeComponent = ({
-  question,
-  handleTextChange,
-  readOnlyFlag,
-}) => {
+export const QuestionTitleComponent = ({ question, readOnlyFlag }) => {
   return (
     <>
       <TextField
-        label="Respuesta"
+        label={`Pregunta ${question.id}`}
+        defaultValue={question.title}
         fullWidth
         margin="normal"
-        variant="outlined"
+        variant="standard"
+        //helperText="Respuesta"
         InputProps={{
           readOnly: readOnlyFlag,
         }}
         InputLabelProps={{
           shrink: true,
         }}
-        onChange={(e) => handleTextChange(question.id, e.target.value)}
       />
     </>
   );

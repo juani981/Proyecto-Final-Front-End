@@ -25,7 +25,7 @@ const AddQuestionComponent = ({questions, setQuestions}) => {
       newQuestion = {
         id: newQuestionId,
         title:'',
-        label: `Pregunta ${newQuestionId}`,
+        //label: `Pregunta ${newQuestionId}`,
         type: 'text',
       }
       setesTexto(true);
@@ -33,7 +33,7 @@ const AddQuestionComponent = ({questions, setQuestions}) => {
       newQuestion = {
         id: newQuestionId,
         title:'',
-        label: `Pregunta ${newQuestionId}`,
+        //label: `Pregunta ${newQuestionId}`,
         type: type,
         options: [],
       };
@@ -42,9 +42,9 @@ const AddQuestionComponent = ({questions, setQuestions}) => {
       newQuestion = {
           id: newQuestionId,
           title:'',
-          label: `Pregunta ${newQuestionId}`,
+          //label: `Pregunta ${newQuestionId}`,
           type: 'rating',
-          options: [],
+          range: [],
       };
       setesTexto(false);
     };

@@ -1,13 +1,13 @@
 import { FormControl,InputLabel,Select,MenuItem } from "@mui/material"
 
-export const ListTypeComponent = ({question,answers,handleAnswerChange}) => {
+export const ListTypeComponent = ({question,answers,handleAnswerChange,label}) => {
   return (
     <>
         <FormControl fullWidth margin="normal">
-            <InputLabel>Respuesta</InputLabel>
+            <InputLabel>{label}</InputLabel>
             <Select
                 value={answers[question.id] || ''}
-                //onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                 autoWidth 
                 >
                 {question.options.map((option, index) => (

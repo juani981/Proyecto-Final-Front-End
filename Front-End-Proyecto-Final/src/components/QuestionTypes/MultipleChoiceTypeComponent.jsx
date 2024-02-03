@@ -1,11 +1,12 @@
+import { Label } from "@mui/icons-material";
 import { FormControl,FormLabel,FormControlLabel,Checkbox,Radio,Paper } from "@mui/material";
 import Divider from '@mui/material/Divider';
 
-export const MultipleChoiceTypeComponent = ({question , answers, handleAnswerChange}) => {
+export const MultipleChoiceTypeComponent = ({question , answers, handleAnswerChange, label}) => {
   return (
     <>
         <FormControl component="fieldset" margin="normal">
-            <FormLabel>Respuestas</FormLabel>
+            <FormLabel>Respuesta</FormLabel>
 
               {question.options.map((option, index) => (
                 <FormControlLabel key={index} 
@@ -18,13 +19,13 @@ export const MultipleChoiceTypeComponent = ({question , answers, handleAnswerCha
                               const updatedOptions = listedOptions.includes(option)
                                 ? listedOptions.filter((o) => o !== option)
                                 : [...listedOptions, option];
-                                    //handleAnswerChange(question.id, updatedOptions);
+                                    handleAnswerChange(question.id, updatedOptions);
                                   }}
                             />
                           )  : (
                             <Radio
                                 checked={answers[question.id] === option}
-                                //onChange={() => handleAnswerChange(question.id, option)}
+                                onChange={() => handleAnswerChange(question.id, option)}
                             />
                                 ) 
                             }
