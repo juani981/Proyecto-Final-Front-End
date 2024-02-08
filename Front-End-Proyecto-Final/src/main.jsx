@@ -1,25 +1,17 @@
 import React from "react";
+import "tailwindcss/tailwind.css";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import BasicTabs from "./components/BasicTabs";
-import SurveyDisplayComponent from "./pages/SurveySubmit";
-import SurveyCreatorComponent from "./pages/SurveyCreator";
+import SurveyDisplayComponent from "./pages/encuesta/SurveySubmit";
+import SurveyCreatorComponent from "./pages/encuesta/SurveyCreator";
+import { NavBar } from "./components/NavBar";
+import Home from "./pages/Home";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <BasicTabs /> {/* Use the BasicTabs component as the navigation bar */}
-      <Routes>
-        <Route
-          path="/pages/SurveyCreator"
-          element={<SurveyCreatorComponent />}
-        />
-        <Route
-          path="/pages/SurveySubmit"
-          element={<SurveyDisplayComponent />}
-        />
-        {/* Add more routes for other pages if needed */}
-      </Routes>
+      <BasicTabs />
     </BrowserRouter>
   </React.StrictMode>
 );

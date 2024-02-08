@@ -9,9 +9,10 @@ export const QuestionWrapper = ({ children }) => {
         elevation={6}
         style={{
           padding: 20,
-          marginBottom: 20,
+          marginTop: 10,
+          marginBottom: 10,
           position: "relative",
-          width: 400,
+          width: 500,
           margin: "auto",
         }}
         square={true}>
