@@ -1,59 +1,16 @@
-// SurveyCreatorComponent.jsx
 import React, { useState } from "react";
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Paper,
-  Fab,
-  Menu,
-  MenuItem,
-  Radio,
-  Checkbox,
-  FormControlLabel,
-  FormControl,
-  FormLabel,
-  Select,
-  Rating,
-  InputLabel,
-  Grid,
-} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { Container, Typography } from "@mui/material";
+import { SaveSurveyComponent } from "../../components/SaveSurveyComponent";
+import AddQuestionComponent from "../../components/AddQuestionComponent";
+import { QuestionIteratorComponent } from "../../components/QuestionIteratorComponent";
+import { mapper } from "../../helpers/mapper";
+import { preguntaMap, respuestaMap } from "../../helpers/maps";
+import api from "../../api/api";
 // ... (importaciones)
-import { SaveSurveyComponent } from "../components/SaveSurveyComponent";
-import AddQuestionComponent from "../components/AddQuestionComponent";
-import { TextTypeComponent } from "../components/QuestionTypes/TextTypeComponent";
-import { MultipleChoiceTypeComponent } from "../components/QuestionTypes/MultipleChoiceTypeComponent";
-import { QuestionWrapper } from "../components/QuestionWrapper";
-import { Mock } from "../components/Mock";
-import { ListTypeComponent } from "../components/QuestionTypes/ListTypeComponent";
-import { QuestionIteratorComponent } from "../components/QuestionIteratorComponent";
 
-const SurveyCreatorComponent = () => {
-  //Preguntas de mock
-  // const newQuestion1 = {
-  //   id: 1,
-  //   label: `Pregunta 1`,
-  //   type: 'list',
-  //   options: ['Opción 1', 'Opción 2', 'Opción 3'],
-  // };
-  // const newQuestion2 = {
-  //   id: 2,
-  //   label: `Pregunta 2`,
-  //   type: 'text',
-  //   options: [''],
-  // };
-  // //Seccion de parseo, puedo reibir una ista de objetos en formato JSON y usarlos como estado por defecto
-  // const arreglo = [newQuestion1,newQuestion2];
-  // const arreglostring = JSON.stringify(arreglo);
-  // const arregloparsed = JSON.parse(arreglostring);
-  // //console.log("Arreglo String:" ,{arreglostring});
-  //
+const QuestionsCreatorComponent = () => {
   const [questions, setQuestions] = useState([]);
-  //const [showFirstQuestion, setShowFirstQuestion] = useState(false);
   const [answers, setAnswers] = useState({});
-  // const [anchorEl, setAnchorEl] = useState(null);
 
   // const handleAnswerChange = (questionId, answer) => {
   //     setAnswers((prevAnswers) => {
@@ -94,11 +51,43 @@ const SurveyCreatorComponent = () => {
     });
     console.log("Respuestas enviadas:", updatedAnswers);
   };
+  const mapQuestions = () => {
+    const questionsData = questions.map((question) => {
+      const questionData = {
+        //id: question.id,
+        title: question.title,
+        type: question.type,
+        options: question.options || [],
+        range: question.range || [],
+      };
+
+      if (
+        ["multiple choice", "list", "unique choice"].includes(question.type)
+      ) {
+        questionData.options = question.options;
+      } else if (question.type === "range") {
+        questionData.range = question.range;
+      }
+      return questionData;
+    });
+
+    const mappedQuestions = mapper.reverseMap(questionsData, preguntaMap);
+    console.log(questions);
+    console.log("Preguntas enviadas:", mappedQuestions);
+    // You can return questionsData if needed
+    return mappedQuestions;
+  };
+  //Enviar el resultado de mapQuestion  a la DB usando axios
+  const postQuestionsToDB = () => {
+    const QuestionsToSubmit = mapQuestions();
+    api.post("api/pregunta", QuestionsToSubmit);
+  };
+  //Función temporal para guardar en un archivo de texto en vez de enviar a DB
   const handleDownload = (event) => {
     //guardado
 
     // Convierte la lista de objetos a formato JSON
-    const jsonString = JSON.stringify(questions, null, 2); // El segundo parámetro (null) y el tercer parámetro (2) son opciones para dar formato al JSON
+    const jsonString = JSON.stringify(handleQuestionsSubmit(), null, 2); // El segundo parámetro (null) y el tercer parámetro (2) son opciones para dar formato al JSON
     // Crea un objeto Blob con el contenido JSON
     const blob = new Blob([jsonString], { type: "application/json" });
 
@@ -111,62 +100,6 @@ const SurveyCreatorComponent = () => {
     link.click();
     //setQuestions([]);
     event.preventDefault();
-  };
-
-  const [dataReader, setDataReader] = useState(null);
-
-  const handleFileInputChange = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const jsonData = JSON.parse(e.target.result);
-          setDataReader(jsonData);
-          console.log("Datos JSON:", jsonData);
-          setQuestions(jsonData);
-        } catch (error) {
-          console.error("Error al parsear el archivo JSON:", error);
-        }
-      };
-
-      reader.readAsText(file);
-      //console.log("Datos obtenidos:",reader);
-    }
-    console.log(dataReader);
-  };
-  //Funcionailad experimental de agregar opciones dinammicamente
-  const handleAddOption = (questionId) => {
-    setQuestions((prevQuestions) => {
-      const updatedQuestions = [...prevQuestions];
-      const questionIndex = updatedQuestions.findIndex(
-        (q) => q.id === questionId
-      );
-
-      if (questionIndex !== -1) {
-        const newOptionId = updatedQuestions[questionIndex].options.length + 1;
-        const newOption = `Opción ${newOptionId}`;
-
-        updatedQuestions[questionIndex].options.push(newOption);
-      }
-
-      return updatedQuestions;
-    });
-  };
-  const handleTitleChange = (questionId, title) => {
-    //Encuentro la pregunta con ese ID
-    const question = questions.find((item) => item.id === questionId);
-    //Asigno el valor que se pasa por formulario a title.
-    // Asigno el valor que se pasa por formulario a title.
-    if (question) {
-      question.title = title;
-      return question.title;
-    } else {
-      // Manejar el caso en el que no se encuentra la pregunta
-      console.error(`Pregunta con ID ${questionId} no encontrada.`);
-      return null; // o algún valor por defecto
-    }
   };
 
   return (
@@ -203,6 +136,7 @@ const SurveyCreatorComponent = () => {
         <QuestionIteratorComponent
           questions={questions}
           answers={answers}
+          setQuestions={setQuestions}
           setAnswers={setAnswers}
           renderForQuestion={true}></QuestionIteratorComponent>
         {/* {questions.map((question) => (
@@ -249,10 +183,10 @@ const SurveyCreatorComponent = () => {
         {/* boton descarga */}
         {/* </Paper> */}
         <SaveSurveyComponent
-          handleDownloadprop={handleDownload}></SaveSurveyComponent>
+          handleSubmit={postQuestionsToDB}></SaveSurveyComponent>
       </Container>
     </>
   );
 };
 
-export default SurveyCreatorComponent;
+export default QuestionsCreatorComponent;

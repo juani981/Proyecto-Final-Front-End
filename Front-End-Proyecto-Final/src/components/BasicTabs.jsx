@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Link, Routes, Route } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import SurveyDisplayComponent from "../pages/encuesta/SurveySubmit";
-import SurveyCreatorComponent from "../pages/encuesta/SurveyCreator";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import QuestionsCreatorComponent from "../pages/encuesta/QuestionsCreator";
+import AnswersSubmitComponent from "../pages/encuesta/AnswersSubmit";
 
 const CustomTabPanel = ({ children, value, index, ...other }) => (
   <div
@@ -45,14 +44,14 @@ const BasicTabs = () => {
             <Tab label="Login" component={Link} to="/pages/Login" />
             <Tab label="Registrar" component={Link} to="/pages/Register" />
             <Tab
-              label="Survey Creator"
+              label="Questions Creator"
               component={Link}
-              to="/pages/encuesta/SurveyCreator"
+              to="/pages/encuesta/QuestionsCreator"
             />
             <Tab
-              label="Survey Submit"
+              label="Answers Submit"
               component={Link}
-              to="/pages/encuesta/SurveySubmit"
+              to="/pages/encuesta/AnswersSubmit"
             />
           </Tabs>
         </Box>
@@ -75,16 +74,16 @@ const BasicTabs = () => {
       <CustomTabPanel value={value} index={3}>
         <Routes>
           <Route
-            path="/pages/encuesta/SurveyCreator"
-            element={<SurveyCreatorComponent />}
+            path="/pages/encuesta/QuestionsCreator"
+            element={<QuestionsCreatorComponent />}
           />
         </Routes>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
         <Routes>
           <Route
-            path="/pages/encuesta/SurveySubmit"
-            element={<SurveyDisplayComponent />}
+            path="/pages/encuesta/AnswersSubmit"
+            element={<AnswersSubmitComponent />}
           />
         </Routes>
       </CustomTabPanel>

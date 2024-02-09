@@ -1,7 +1,7 @@
 import react from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import SurveyCreatorComponent from "../pages/encuesta/SurveyCreator";
-import SurveyDisplayComponent from "../pages/encuesta/SurveySubmit";
+//import <QuestionsCreatorComponent></QuestionsCreatorComponent>
+//import SurveyDisplayComponent from "../pages/encuesta/";
 
 export const NavBar = () => {
   return (
@@ -31,7 +31,7 @@ export const NavBar = () => {
                 </li>
                 <li>
                   <Link
-                    to="pages/encuesta/SurveyCreator"
+                    to="pages/encuesta/QuestionsCreator"
                     className="block rounded py-2 pr-4 pl-3 text-white"
                     aria-current="page">
                     Crear
@@ -39,7 +39,7 @@ export const NavBar = () => {
                 </li>
                 <li>
                   <Link
-                    to="pages/encuesta/SurveySubmit"
+                    to="pages/encuesta/AnswersSubmit"
                     className="block rounded py-2 pr-4 pl-3 text-white"
                     aria-current="page">
                     Responder

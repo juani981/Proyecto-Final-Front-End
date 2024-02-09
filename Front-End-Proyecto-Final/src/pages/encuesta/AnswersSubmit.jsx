@@ -8,7 +8,7 @@ import axios, { postToDataBase } from "../../api/api";
 
 // ... (fin importaciones)
 
-const SurveyDisplayComponent = () => {
+const AnswersSubmitComponent = () => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
 
@@ -116,4 +116,4 @@ const SurveyDisplayComponent = () => {
     </>
   );
 };
-export default SurveyDisplayComponent;
+export default AnswersSubmitComponent;

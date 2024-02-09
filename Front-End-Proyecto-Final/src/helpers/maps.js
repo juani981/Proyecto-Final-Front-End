@@ -3,7 +3,7 @@ export const preguntaMap = {
   //A <- B
   //reverse map convierte de A a B
   //A ->  B
-  id: "id_pregunta",
+  //id: "id_pregunta",
   title: "titulo_pregunta",
   type: "tipo_pregunta",
   options: "seleccion",
@@ -11,7 +11,7 @@ export const preguntaMap = {
 };
 
 export const respuestaMap = {
-  id: "id_respuesta",
+  //id: "id_respuesta",
   id_encuestado: "id_encuestado",
   type: "tipo_respuesta",
   score: "puntuacion",
