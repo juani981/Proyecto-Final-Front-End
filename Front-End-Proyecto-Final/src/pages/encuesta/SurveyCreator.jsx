@@ -1,17 +1,19 @@
 import { React, useState } from "react";
+import { TextField } from "@mui/material";
+import { PaperWrapper } from "../../components/PaperWrapper";
 
-export const SurveyCreatorComponent = () => {
+const SurveyCreatorComponent = () => {
   const [title, setTitle] = useState("");
-  const handleTitleChange = (title) => {
+  const handleTitleChange = (event) => {
     //code here to update the title of the survey in state.
-    console.log(title);
-    setTitle(title);
+    console.log(event.target.value);
+    setTitle(event.target.value);
   };
 
   return (
-    <>
+    <PaperWrapper>
       <TextField
-        label="Respuesta"
+        label="Título"
         fullWidth
         margin="normal"
         variant="outlined"
@@ -21,8 +23,9 @@ export const SurveyCreatorComponent = () => {
         InputLabelProps={{
           shrink: true,
         }}
-        onChange={(e) => handleTitleChange(e.target.value)}
+        onChange={handleTitleChange}
       />
-    </>
+    </PaperWrapper>
   );
 };
+export default SurveyCreatorComponent;

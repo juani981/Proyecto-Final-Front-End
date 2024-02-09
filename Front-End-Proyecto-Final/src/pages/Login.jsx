@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../api/api";
+import { PaperWrapper } from "../components/PaperWrapper";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,12 +21,11 @@ const Login = () => {
   };
 
   return (
-    <section className="bg-[#F4F7FF] py-20 lg:py-[120px]">
-      <div className="container mx-auto">
-        <div className="-mx-4 flex flex-wrap">
-          <div className="w-full px-4">
-            <div
-              className="
+    <PaperWrapper>
+      <div className="-mx-4 flex flex-wrap">
+        <div className="w-full px-4">
+          <div
+            className="
               relative
               mx-auto
               max-w-[525px]
@@ -38,15 +38,15 @@ const Login = () => {
               sm:px-12
               md:px-[60px]
             ">
-              <div className="mb-10 text-center md:mb-16">Web Encuestas</div>
-              <form onSubmit={handleLogin}>
-                <div className="mb-4">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Email"
-                    className="
+            <div className="mb-10 text-center md:mb-16">Web Encuestas</div>
+            <form onSubmit={handleLogin}>
+              <div className="mb-4">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                  className="
                     bordder-[#E9EDF4]
                     w-full
                     rounded-md
@@ -60,18 +60,18 @@ const Login = () => {
                     focus:border-primary
                     focus-visible:shadow-none
                   "
-                  />
-                  <div className="flex">
-                    <span className="text-red-400 text-sm m-2 p-2">error</span>
-                  </div>
+                />
+                <div className="flex">
+                  <span className="text-red-400 text-sm m-2 p-2">error</span>
                 </div>
-                <div className="mb-4">
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Contraseña"
-                    className="
+              </div>
+              <div className="mb-4">
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Contraseña"
+                  className="
                     bordder-[#E9EDF4]
                     w-full
                     rounded-md
@@ -85,15 +85,15 @@ const Login = () => {
                     focus:border-primary
                     focus-visible:shadow-none
                   "
-                  />
-                  <div className="flex">
-                    <span className="text-red-400 text-sm m-2 p-2">error</span>
-                  </div>
+                />
+                <div className="flex">
+                  <span className="text-red-400 text-sm m-2 p-2">error</span>
                 </div>
-                <div className="mb-10">
-                  <button
-                    type="submit"
-                    className="
+              </div>
+              <div className="mb-10">
+                <button
+                  type="submit"
+                  className="
                     w-full
                     px-4
                     py-3
@@ -102,30 +102,29 @@ const Login = () => {
                     rounded-md
                     text-white
                   ">
-                    Entrar
-                  </button>
-                </div>
-              </form>
-              <Link
-                to="/forgot-password"
-                className="
+                  Entrar
+                </button>
+              </div>
+            </form>
+            <Link
+              to="/forgot-password"
+              className="
                 mb-2
                 inline-block
                 text-base text-[#adadad]
                 hover:text-primary hover:underline
               ">
-                ¿Olvidó su contraseña?
+              ¿Olvidó su contraseña?
+            </Link>
+            <p className="text-base text-[#adadad]">
+              <Link to="/register" className="text-primary hover:underline">
+                ¿No está registrado?
               </Link>
-              <p className="text-base text-[#adadad]">
-                <Link to="/register" className="text-primary hover:underline">
-                  ¿No está registrado?
-                </Link>
-              </p>
-            </div>
+            </p>
           </div>
         </div>
       </div>
-    </section>
+    </PaperWrapper>
   );
 };
 

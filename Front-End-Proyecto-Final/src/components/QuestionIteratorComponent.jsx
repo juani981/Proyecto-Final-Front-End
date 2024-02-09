@@ -4,7 +4,7 @@ import { MultipleChoiceTypeComponent } from "./QuestionTypes/MultipleChoiceTypeC
 import { ListTypeComponent } from "./QuestionTypes/ListTypeComponent";
 import { RatingTypeComponent } from "./QuestionTypes/RatingTypeComponent";
 import { QuestionTitleComponent } from "./QuestionTitleComponent";
-import { QuestionWrapper } from "./QuestionWrapper";
+import { PaperWrapper } from "./PaperWrapper";
 import AddOptionsComponent from "./AddOptionsComponent";
 
 export const QuestionIteratorComponent = ({
@@ -76,7 +76,7 @@ export const QuestionIteratorComponent = ({
   };
 
   return questions.map((question) => (
-    <QuestionWrapper key={question.id}>
+    <PaperWrapper key={question.id}>
       <>
         <QuestionTitleComponent
           question={question}
@@ -130,6 +130,6 @@ export const QuestionIteratorComponent = ({
             setQuestions={setQuestions}></AddOptionsComponent>
         )}
       </>
-    </QuestionWrapper>
+    </PaperWrapper>
   ));
 };

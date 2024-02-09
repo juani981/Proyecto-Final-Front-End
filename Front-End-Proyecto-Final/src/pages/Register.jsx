@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../api/api";
+import { PaperWrapper } from "../components/PaperWrapper";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -28,12 +29,11 @@ const Register = () => {
     }
   };
   return (
-    <section className="bg-[#F4F7FF] py-20 lg:py-[120px]">
-      <div className="container mx-auto">
-        <div className="-mx-4 flex flex-wrap">
-          <div className="w-full px-4">
-            <div
-              className="
+    <PaperWrapper>
+      <div className="-mx-4 flex flex-wrap">
+        <div className="w-full px-4">
+          <div
+            className="
               relative
               mx-auto
               max-w-[525px]
@@ -46,15 +46,15 @@ const Register = () => {
               sm:px-12
               md:px-[60px]
             ">
-              <div className="mb-10 text-center md:mb-16">Web Encuestas</div>
-              <form onSubmit={handleRegister}>
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    placeholder="Nombre"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="
+            <div className="mb-10 text-center md:mb-16">Web Encuestas</div>
+            <form onSubmit={handleRegister}>
+              <div className="mb-4">
+                <input
+                  type="text"
+                  placeholder="Nombre"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="
                     bordder-[#E9EDF4]
                     w-full
                     rounded-md
@@ -68,18 +68,18 @@ const Register = () => {
                     focus:border-primary
                     focus-visible:shadow-none
                   "
-                  />
-                  <div className="flex">
-                    <span className="text-red-400 text-sm m-2 p-2">error</span>
-                  </div>
+                />
+                <div className="flex">
+                  <span className="text-red-400 text-sm m-2 p-2">error</span>
                 </div>
-                <div className="mb-4">
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="
+              </div>
+              <div className="mb-4">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="
                     bordder-[#E9EDF4]
                     w-full
                     rounded-md
@@ -93,18 +93,18 @@ const Register = () => {
                     focus:border-primary
                     focus-visible:shadow-none
                   "
-                  />
-                  <div className="flex">
-                    <span className="text-red-400 text-sm m-2 p-2">error</span>
-                  </div>
+                />
+                <div className="flex">
+                  <span className="text-red-400 text-sm m-2 p-2">error</span>
                 </div>
-                <div className="mb-4">
-                  <input
-                    type="password"
-                    placeholder="Contraseña"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="
+              </div>
+              <div className="mb-4">
+                <input
+                  type="password"
+                  placeholder="Contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="
                     bordder-[#E9EDF4]
                     w-full
                     rounded-md
@@ -118,18 +118,18 @@ const Register = () => {
                     focus:border-primary
                     focus-visible:shadow-none
                   "
-                  />
-                  <div className="flex">
-                    <span className="text-red-400 text-sm m-2 p-2">error</span>
-                  </div>
+                />
+                <div className="flex">
+                  <span className="text-red-400 text-sm m-2 p-2">error</span>
                 </div>
-                <div className="mb-4">
-                  <input
-                    type="password"
-                    placeholder="Confirme su contraseña"
-                    value={passwordConfirmation}
-                    onChange={(e) => setPasswordConfirmation(e.target.value)}
-                    className="
+              </div>
+              <div className="mb-4">
+                <input
+                  type="password"
+                  placeholder="Confirme su contraseña"
+                  value={passwordConfirmation}
+                  onChange={(e) => setPasswordConfirmation(e.target.value)}
+                  className="
                     bordder-[#E9EDF4]
                     w-full
                     rounded-md
@@ -143,12 +143,12 @@ const Register = () => {
                     focus:border-primary
                     focus-visible:shadow-none
                   "
-                  />
-                </div>
-                <div className="mb-10">
-                  <button
-                    type="submit"
-                    className="
+                />
+              </div>
+              <div className="mb-10">
+                <button
+                  type="submit"
+                  className="
                     w-full
                     px-4
                     py-3
@@ -157,25 +157,24 @@ const Register = () => {
                     rounded-md
                     text-white
                   ">
-                    Registrarse
-                  </button>
-                </div>
-              </form>
-              <Link
-                to="/login"
-                className="
+                  Registrarse
+                </button>
+              </div>
+            </form>
+            <Link
+              to="/login"
+              className="
                 mb-2
                 inline-block
                 text-base text-[#adadad]
                 hover:text-primary hover:underline
               ">
-                Iniciar sesión
-              </Link>
-            </div>
+              Iniciar sesión
+            </Link>
           </div>
         </div>
       </div>
-    </section>
+    </PaperWrapper>
   );
 };
 

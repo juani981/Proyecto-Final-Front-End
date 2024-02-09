@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, useRoutes, Routes, Route } from "react-router-dom";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -8,17 +8,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import QuestionsCreatorComponent from "../pages/encuesta/QuestionsCreator";
 import AnswersSubmitComponent from "../pages/encuesta/AnswersSubmit";
-
-const CustomTabPanel = ({ children, value, index, ...other }) => (
-  <div
-    role="tabpanel"
-    hidden={value !== index}
-    id={`simple-tabpanel-${index}`}
-    aria-labelledby={`simple-tab-${index}`}
-    {...other}>
-    {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-  </div>
-);
+import SurveyCreatorComponent from "../pages/encuesta/SurveyCreator";
 
 const BasicTabs = () => {
   const [value, setValue] = useState(0);
@@ -27,6 +17,24 @@ const BasicTabs = () => {
     setValue(newValue);
   };
 
+  const routes = useRoutes([
+    { path: "/pages/Home", element: <Home /> },
+    { path: "/pages/Login", element: <Login /> },
+    { path: "/pages/Register", element: <Register /> },
+    {
+      path: "/pages/encuesta/SurveyCreator",
+      element: <SurveyCreatorComponent />,
+    },
+    {
+      path: "/pages/encuesta/QuestionsCreator",
+      element: <QuestionsCreatorComponent />,
+    },
+    {
+      path: "/pages/encuesta/AnswersSubmit",
+      element: <AnswersSubmitComponent />,
+    },
+  ]);
+
   return (
     <Box sx={{ width: "100%" }}>
       <div className="grid justify-end bg-indigo-900 text-white px-2 py-2.5 sm:px-4 mb-4">
@@ -34,7 +42,7 @@ const BasicTabs = () => {
           <Tabs
             value={value}
             onChange={handleChange}
-            aria-label="basic tabs example"
+            aria-label="Navigation Bar"
             textColor="inherit">
             <Tab
               label="Web Encuestas (Logo placeholder)"
@@ -43,6 +51,11 @@ const BasicTabs = () => {
             />
             <Tab label="Login" component={Link} to="/pages/Login" />
             <Tab label="Registrar" component={Link} to="/pages/Register" />
+            <Tab
+              label="Crear Encuesta"
+              component={Link}
+              to="/pages/encuesta/SurveyCreator"
+            />
             <Tab
               label="Questions Creator"
               component={Link}
@@ -56,37 +69,7 @@ const BasicTabs = () => {
           </Tabs>
         </Box>
       </div>
-      <CustomTabPanel value={value} index={0}>
-        <Routes>
-          <Route path="/pages/Home" element={<Home />} />
-        </Routes>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <Routes>
-          <Route path="/pages/Login" element={<Login />} />
-        </Routes>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        <Routes>
-          <Route path="/pages/Register" element={<Register />} />
-        </Routes>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
-        <Routes>
-          <Route
-            path="/pages/encuesta/QuestionsCreator"
-            element={<QuestionsCreatorComponent />}
-          />
-        </Routes>
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={4}>
-        <Routes>
-          <Route
-            path="/pages/encuesta/AnswersSubmit"
-            element={<AnswersSubmitComponent />}
-          />
-        </Routes>
-      </CustomTabPanel>
+      {routes}
     </Box>
   );
 };

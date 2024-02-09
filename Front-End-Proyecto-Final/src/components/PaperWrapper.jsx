@@ -2,7 +2,7 @@ import { Paper } from "@mui/material";
 
 import React from "react";
 
-export const QuestionWrapper = ({ children }) => {
+export const PaperWrapper = ({ children }) => {
   return (
     <>
       <Paper
