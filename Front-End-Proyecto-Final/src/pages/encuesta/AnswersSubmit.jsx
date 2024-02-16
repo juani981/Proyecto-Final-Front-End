@@ -15,7 +15,7 @@ const AnswersSubmitComponent = () => {
   const handleAnswersSubmit = () => {
     const mappedQuestions = mapper.map(questions, preguntaMap);
     console.log("Mapeadas: ", mappedQuestions);
-    const updatedAnswers = mappedQuestions.map((question, index) => {
+    const updatedAnswers = mappedQuestions.map((question) => {
       const formattedAnswer = {
         id: question.id,
         id_encuestado: "",
@@ -25,20 +25,21 @@ const AnswersSubmitComponent = () => {
         text_entry: "",
       };
 
-      if (
-        ["multiple choice", "list", "unique choice"].includes(question.type)
-      ) {
-        formattedAnswer.options = answers[index] || [];
-      } else if (question.type === "text") {
-        formattedAnswer.text_entry = answers[index] || "";
-      } else if (question.type === "rating") {
-        formattedAnswer.score = answers[index] || "";
+      const answerIndex = answers.findIndex((ans) => ans.id === question.id);
+      if (answerIndex !== -1 && answers[answerIndex]) {
+        const answer = answers[answerIndex];
+        if (
+          ["multiple choice", "list", "unique choice"].includes(question.type)
+        ) {
+          formattedAnswer.options = answer.options || [];
+        } else if (question.type === "text") {
+          formattedAnswer.text_entry = answer.text_entry || "";
+        } else if (question.type === "rating") {
+          formattedAnswer.score = answer.score || "";
+        }
       }
 
-      return {
-        ...formattedAnswer,
-        id: question.id,
-      };
+      return { ...formattedAnswer, id: question.id };
     });
 
     const mappedAnswers = mapper.reverseMap(updatedAnswers, respuestaMap);
@@ -100,7 +101,8 @@ const AnswersSubmitComponent = () => {
           answers={answers}
           setAnswers={setAnswers}
           setQuestions={setQuestions}
-          renderForAnswer={true}></QuestionIteratorComponent>
+          renderForAnswer={true}
+          renderForQuestion={false}></QuestionIteratorComponent>
 
         {/* </Paper> */}
         <Paper>

@@ -6,6 +6,7 @@ import { RatingTypeComponent } from "./QuestionTypes/RatingTypeComponent";
 import { QuestionTitleComponent } from "./QuestionTitleComponent";
 import { PaperWrapper } from "./PaperWrapper";
 import AddOptionsComponent from "./AddOptionsComponent";
+import { UniqueChoiceTypeComponent } from "./QuestionTypes/UniqueChoiceTypeComponent";
 
 export const QuestionIteratorComponent = ({
   questions,
@@ -58,7 +59,7 @@ export const QuestionIteratorComponent = ({
   const handleAnswerChange = (questionId, answer) => {
     setAnswers((prevAnswers) => {
       const updatedAnswers = { ...prevAnswers };
-      const question = questions.find((q) => q.id.toString() === questionId);
+      //const question = questions.find((q) => q.id.toString() === questionId);
 
       // if (question && question.tipo_pregunta === "list") {
       //   updatedAnswers[questionId] = answer || ""; // Tomar el valor seleccionado o cadena vacía si no hay selección
@@ -116,15 +117,22 @@ export const QuestionIteratorComponent = ({
             handleAnswerChange={handleAnswerChange}
             label={getLabel(question.id)}></ListTypeComponent>
         )}
-        {["multiple choice", "unique choice"].includes(question.type) && (
+        {question.type === "multiple choice" && (
           <MultipleChoiceTypeComponent
             question={question}
             answers={answers}
             handleAnswerChange={handleAnswerChange}
             label={getLabel(question.id)}></MultipleChoiceTypeComponent>
         )}
+        {question.type === "unique choice" && (
+          <UniqueChoiceTypeComponent
+            question={question}
+            answers={answers}
+            handleAnswerChange={handleAnswerChange}
+            label={getLabel(question.id)}></UniqueChoiceTypeComponent>
+        )}
         {["multiple choice", "unique choice", "list"].includes(
-          question.type
+          question.type && renderForQuestion
         ) && (
           <AddOptionsComponent
             setQuestions={setQuestions}></AddOptionsComponent>

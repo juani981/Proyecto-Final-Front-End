@@ -54,7 +54,7 @@ const QuestionsCreatorComponent = () => {
   const mapQuestions = () => {
     const questionsData = questions.map((question) => {
       const questionData = {
-        //id: question.id,
+        id: question.id,
         title: question.title,
         type: question.type,
         options: question.options || [],
@@ -74,7 +74,7 @@ const QuestionsCreatorComponent = () => {
     const mappedQuestions = mapper.reverseMap(questionsData, preguntaMap);
     console.log(questions);
     console.log("Preguntas enviadas:", mappedQuestions);
-    // You can return questionsData if needed
+
     return mappedQuestions;
   };
   //Enviar el resultado de mapQuestion  a la DB usando axios
@@ -87,7 +87,7 @@ const QuestionsCreatorComponent = () => {
     //guardado
 
     // Convierte la lista de objetos a formato JSON
-    const jsonString = JSON.stringify(handleQuestionsSubmit(), null, 2); // El segundo parámetro (null) y el tercer parámetro (2) son opciones para dar formato al JSON
+    const jsonString = JSON.stringify(mapQuestions(), null, 2); // El segundo parámetro (null) y el tercer parámetro (2) son opciones para dar formato al JSON
     // Crea un objeto Blob con el contenido JSON
     const blob = new Blob([jsonString], { type: "application/json" });
 
@@ -138,6 +138,7 @@ const QuestionsCreatorComponent = () => {
           answers={answers}
           setQuestions={setQuestions}
           setAnswers={setAnswers}
+          renderForAnswer={false}
           renderForQuestion={true}></QuestionIteratorComponent>
         {/* {questions.map((question) => (
                   <QuestionWrapper key={question.id}>
@@ -183,7 +184,7 @@ const QuestionsCreatorComponent = () => {
         {/* boton descarga */}
         {/* </Paper> */}
         <SaveSurveyComponent
-          handleSubmit={postQuestionsToDB}></SaveSurveyComponent>
+          handleSubmit={handleDownload}></SaveSurveyComponent>
       </Container>
     </>
   );

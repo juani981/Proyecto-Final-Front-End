@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
 
-export const MultipleChoiceTypeComponent = ({
+export const UniqueChoiceTypeComponent = ({
   question,
   answers,
   handleAnswerChange,
@@ -24,21 +24,7 @@ export const MultipleChoiceTypeComponent = ({
           <FormControlLabel
             key={question.id}
             control={
-              question.type === "multiple choice" ? (
-                <Checkbox
-                  checked={
-                    Array.isArray(answers[question.id]) &&
-                    answers[question.id].includes(option)
-                  }
-                  onChange={() => {
-                    const listedOptions = answers[question.id] || [];
-                    const updatedOptions = listedOptions.includes(option)
-                      ? listedOptions.filter((o) => o !== option)
-                      : [...listedOptions, option];
-                    handleAnswerChange(question.id, updatedOptions);
-                  }}
-                />
-              ) : (
+              question.type === "unique choice" && (
                 <Radio
                   checked={answers[question.id] === option}
                   onChange={() => handleAnswerChange(question.id, option)}
