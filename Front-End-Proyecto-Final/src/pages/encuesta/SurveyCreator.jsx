@@ -25,6 +25,10 @@ const SurveyCreatorComponent = () => {
         }}
         onChange={handleTitleChange}
       />
+      <p>
+        Aqui se dá título y ID a la encuesta y se redirige a la creación de
+        preguntas
+      </p>
     </PaperWrapper>
   );
 };

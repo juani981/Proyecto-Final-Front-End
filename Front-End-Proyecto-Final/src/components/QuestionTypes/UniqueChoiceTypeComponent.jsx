@@ -19,7 +19,6 @@ export const UniqueChoiceTypeComponent = ({
     <>
       <FormControl component="fieldset" margin="normal">
         <FormLabel>Respuesta</FormLabel>
-
         {question.options.map((option, index) => (
           <FormControlLabel
             key={question.id}

@@ -4,7 +4,6 @@ import {
   FormLabel,
   FormControlLabel,
   Checkbox,
-  Radio,
   Paper,
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
@@ -18,30 +17,31 @@ export const MultipleChoiceTypeComponent = ({
   return (
     <>
       <FormControl component="fieldset" margin="normal">
-        <FormLabel>Respuesta</FormLabel>
+        <FormLabel>{label}</FormLabel>
 
         {question.options.map((option, index) => (
           <FormControlLabel
             key={question.id}
             control={
-              question.type === "multiple choice" ? (
+              question.type === "multiple choice" && (
                 <Checkbox
                   checked={
-                    Array.isArray(answers[question.id]) &&
+                    answers[question.id] &&
                     answers[question.id].includes(option)
                   }
                   onChange={() => {
-                    const listedOptions = answers[question.id] || [];
-                    const updatedOptions = listedOptions.includes(option)
-                      ? listedOptions.filter((o) => o !== option)
-                      : [...listedOptions, option];
+                    const updatedOptions = [];
+                    if (answers[question.id]) {
+                      updatedOptions.push(...answers[question.id]);
+                    }
+                    const indexOfOption = updatedOptions.indexOf(option);
+                    if (indexOfOption === -1) {
+                      updatedOptions.push(option);
+                    } else {
+                      updatedOptions.splice(indexOfOption, 1);
+                    }
                     handleAnswerChange(question.id, updatedOptions);
                   }}
-                />
-              ) : (
-                <Radio
-                  checked={answers[question.id] === option}
-                  onChange={() => handleAnswerChange(question.id, option)}
                 />
               )
             }

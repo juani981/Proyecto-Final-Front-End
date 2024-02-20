@@ -31,33 +31,33 @@ const AddOptionsComponent = ({
     setNewOption("");
   };
   return (
-    !Boolean(esTexto) && (
-      <>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}>
-          {/* <div style={{ marginTop: 16, textAlign: 'center' }}> */}
-          <TextField
-            label="Nueva Opción"
-            variant="outlined"
-            value={newOption}
-            onChange={(e) => setNewOption(e.target.value)}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleAddOption}
-            style={{ marginLeft: 8 }}>
-            Agregar Opción
-          </Button>
-        </div>
-      </>
-    )
+    //!Boolean(esTexto) && (
+    <>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+        }}>
+        {/* <div style={{ marginTop: 16, textAlign: 'center' }}> */}
+        <TextField
+          label="Nueva Opción"
+          variant="outlined"
+          value={newOption}
+          onChange={(e) => setNewOption(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAddOption}
+          style={{ marginLeft: 8 }}>
+          Agregar Opción
+        </Button>
+      </div>
+    </>
   );
+  //);
 };
 export default AddOptionsComponent;

@@ -58,7 +58,7 @@ export const QuestionIteratorComponent = ({
   };
   const handleAnswerChange = (questionId, answer) => {
     setAnswers((prevAnswers) => {
-      const updatedAnswers = { ...prevAnswers };
+      const updatedAnswers = { ...prevAnswers, [questionId]: answer };
       //const question = questions.find((q) => q.id.toString() === questionId);
 
       // if (question && question.tipo_pregunta === "list") {
@@ -131,12 +131,11 @@ export const QuestionIteratorComponent = ({
             handleAnswerChange={handleAnswerChange}
             label={getLabel(question.id)}></UniqueChoiceTypeComponent>
         )}
-        {["multiple choice", "unique choice", "list"].includes(
-          question.type && renderForQuestion
-        ) && (
-          <AddOptionsComponent
-            setQuestions={setQuestions}></AddOptionsComponent>
-        )}
+        {["multiple choice", "unique choice", "list"].includes(question.type) &&
+          renderForQuestion === true && (
+            <AddOptionsComponent
+              setQuestions={setQuestions}></AddOptionsComponent>
+          )}
       </>
     </PaperWrapper>
   ));
