@@ -9,9 +9,10 @@ export const SaveSurveyComponent = ({ handleSubmit }) => {
         variant="contained"
         color="primary"
         onClick={handleSubmit}
-        style={{
-          marginTop: 40,
-        }}>
+        // style={{
+        //   marginTop: 40,
+        // }}
+      >
         Guardar Encuesta
       </Button>
     </>

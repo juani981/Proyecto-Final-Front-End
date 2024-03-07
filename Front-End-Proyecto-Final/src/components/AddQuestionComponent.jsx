@@ -82,9 +82,9 @@ const AddQuestionComponent = ({ questions, setQuestions }) => {
         color="primary"
         aria-label="add"
         style={{
-          position: "absolute",
-          bottom: 55,
-          right: 16,
+          position: "relative",
+          // bottom: 55,
+          // right: 16,
         }}
         onClick={(event) => handleMenuOpen(event)}>
         <AddIcon />

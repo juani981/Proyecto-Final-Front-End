@@ -1,4 +1,5 @@
 import React from "react";
+import { Grid } from "@mui/material";
 import { TextTypeComponent } from "./QuestionTypes/TextTypeComponent";
 import { MultipleChoiceTypeComponent } from "./QuestionTypes/MultipleChoiceTypeComponent";
 import { ListTypeComponent } from "./QuestionTypes/ListTypeComponent";
@@ -7,6 +8,7 @@ import { QuestionTitleComponent } from "./QuestionTitleComponent";
 import { PaperWrapper } from "./PaperWrapper";
 import AddOptionsComponent from "./AddOptionsComponent";
 import { UniqueChoiceTypeComponent } from "./QuestionTypes/UniqueChoiceTypeComponent";
+import { DeleteQuestionComponent } from "./DeleteQuestionComponent";
 
 export const QuestionIteratorComponent = ({
   questions,
@@ -77,15 +79,22 @@ export const QuestionIteratorComponent = ({
   };
 
   return questions.map((question) => (
-    <PaperWrapper key={question.id}>
-      <>
-        <QuestionTitleComponent
-          question={question}
-          readOnlyFlag={getReadOnlyFlag}
-          handleTitleChange={handleTitleChange}></QuestionTitleComponent>
-        {/* <Grid item xs={12} key={question.id}> */}
-        {/*All Agregar preguntas ésto no es necesario*/}
-        {/* {question.type === 'text' && (
+    <Grid
+      container
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+      key={question.id}>
+      <DeleteQuestionComponent />
+      <PaperWrapper>
+        <>
+          <QuestionTitleComponent
+            question={question}
+            readOnlyFlag={getReadOnlyFlag}
+            handleTitleChange={handleTitleChange}></QuestionTitleComponent>
+          {/* <Grid item xs={12} key={question.id}> */}
+          {/*All Agregar preguntas ésto no es necesario*/}
+          {/* {question.type === 'text' && (
                   <TextField
                   label={question.label}
                   fullWidth
@@ -97,46 +106,49 @@ export const QuestionIteratorComponent = ({
                   onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                   />
                 )} */}
-        {question.type === "text" && (
-          <TextTypeComponent
-            question={question}
-            handleTextChange={handleAnswerChange}
-            readOnlyFlag={getReadOnlyFlag()}></TextTypeComponent>
-        )}
-        {question.type === "rating" && (
-          <RatingTypeComponent
-            question={question}
-            handleAnswerChange={handleAnswerChange}
-            handleQuestionChange={handleQuestionChange}
-            readOnlyFlag={getReadOnlyFlag()}></RatingTypeComponent>
-        )}
-        {question.type === "list" && question.options.length > 0 && (
-          <ListTypeComponent
-            question={question}
-            answers={answers}
-            handleAnswerChange={handleAnswerChange}
-            label={getLabel(question.id)}></ListTypeComponent>
-        )}
-        {question.type === "multiple choice" && (
-          <MultipleChoiceTypeComponent
-            question={question}
-            answers={answers}
-            handleAnswerChange={handleAnswerChange}
-            label={getLabel(question.id)}></MultipleChoiceTypeComponent>
-        )}
-        {question.type === "unique choice" && (
-          <UniqueChoiceTypeComponent
-            question={question}
-            answers={answers}
-            handleAnswerChange={handleAnswerChange}
-            label={getLabel(question.id)}></UniqueChoiceTypeComponent>
-        )}
-        {["multiple choice", "unique choice", "list"].includes(question.type) &&
-          renderForQuestion === true && (
-            <AddOptionsComponent
-              setQuestions={setQuestions}></AddOptionsComponent>
+          {question.type === "text" && (
+            <TextTypeComponent
+              question={question}
+              handleTextChange={handleAnswerChange}
+              readOnlyFlag={getReadOnlyFlag()}></TextTypeComponent>
           )}
-      </>
-    </PaperWrapper>
+          {question.type === "rating" && (
+            <RatingTypeComponent
+              question={question}
+              handleAnswerChange={handleAnswerChange}
+              handleQuestionChange={handleQuestionChange}
+              readOnlyFlag={getReadOnlyFlag()}></RatingTypeComponent>
+          )}
+          {question.type === "list" && question.options.length > 0 && (
+            <ListTypeComponent
+              question={question}
+              answers={answers}
+              handleAnswerChange={handleAnswerChange}
+              label={getLabel(question.id)}></ListTypeComponent>
+          )}
+          {question.type === "multiple choice" && (
+            <MultipleChoiceTypeComponent
+              question={question}
+              answers={answers}
+              handleAnswerChange={handleAnswerChange}
+              label={getLabel(question.id)}></MultipleChoiceTypeComponent>
+          )}
+          {question.type === "unique choice" && (
+            <UniqueChoiceTypeComponent
+              question={question}
+              answers={answers}
+              handleAnswerChange={handleAnswerChange}
+              label={getLabel(question.id)}></UniqueChoiceTypeComponent>
+          )}
+          {["multiple choice", "unique choice", "list"].includes(
+            question.type
+          ) &&
+            renderForQuestion === true && (
+              <AddOptionsComponent
+                setQuestions={setQuestions}></AddOptionsComponent>
+            )}
+        </>
+      </PaperWrapper>
+    </Grid>
   ));
 };

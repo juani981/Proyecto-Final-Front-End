@@ -1,17 +1,21 @@
 import React, { useState } from "react";
-import { Container, Typography } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { Container, Typography, Grid, Button } from "@mui/material";
 import { SaveSurveyComponent } from "../../components/SaveSurveyComponent";
 import AddQuestionComponent from "../../components/AddQuestionComponent";
 import { QuestionIteratorComponent } from "../../components/QuestionIteratorComponent";
 import { mapper } from "../../helpers/mapper";
 import { preguntaMap, respuestaMap } from "../../helpers/maps";
-import api from "../../api/api";
+import axios from "../../api/api";
+
 // ... (importaciones)
 
 const QuestionsCreatorComponent = () => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
+  const navigate = useNavigate();
 
+  const csrf = () => axios.get("/sanctum/csrf-cookie");
   // const handleAnswerChange = (questionId, answer) => {
   //     setAnswers((prevAnswers) => {
   //       const updatedAnswers = { ...prevAnswers };
@@ -78,9 +82,17 @@ const QuestionsCreatorComponent = () => {
     return mappedQuestions;
   };
   //Enviar el resultado de mapQuestion  a la DB usando axios
-  const postQuestionsToDB = () => {
+  const postQuestionsToDB = async (event) => {
+    event.preventDefault();
     const QuestionsToSubmit = mapQuestions();
-    api.post("api/pregunta", QuestionsToSubmit);
+    try {
+      await csrf();
+      await axios.post("/api/encuestas/14/preguntas", QuestionsToSubmit); //14 <- $encuestaId
+      // console.log("Succes: ", QuestionsToSubmit);
+      navigate("./Home"); //revisar-> No routes matched location "/pages/encuesta/QuestionsCreator/Home"
+    } catch (e) {
+      console.log(e);
+    }
   };
   //Función temporal para guardar en un archivo de texto en vez de enviar a DB
   const handleDownload = (event) => {
@@ -133,6 +145,7 @@ const QuestionsCreatorComponent = () => {
               onChange={(e) => handleAnswerChange(question.id, e.target.value)}
               />
             )} */}
+
         <QuestionIteratorComponent
           questions={questions}
           answers={answers}
@@ -140,6 +153,7 @@ const QuestionsCreatorComponent = () => {
           setAnswers={setAnswers}
           renderForAnswer={false}
           renderForQuestion={true}></QuestionIteratorComponent>
+
         {/* {questions.map((question) => (
                   <QuestionWrapper key={question.id}>
                     <TextTypeComponent question={question} handleTitleChange={handleTitleChange}></TextTypeComponent>
@@ -151,40 +165,66 @@ const QuestionsCreatorComponent = () => {
                     )}
                         </QuestionWrapper>
                       ))} */}
-        <AddQuestionComponent
-          questions={questions}
-          setQuestions={setQuestions}></AddQuestionComponent>
-        {/* </Grid>*/}
+        <Grid
+          style={{ width: "50vw", margin: "auto" }}
+          container
+          direction="row"
+          justifyContent="space-around"
+          alignItems="center">
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center">
+            <AddQuestionComponent
+              questions={questions}
+              setQuestions={setQuestions}></AddQuestionComponent>
+          </Grid>
 
+          <Grid container alignContent="center">
+            <Grid item xs={12} sm={12} md={4}>
+              <Button variant="contained" color="error">
+                Cancelar
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Button variant="contained" color="primary">
+                Guardar Borrador
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <SaveSurveyComponent
+                handleSubmit={postQuestionsToDB}></SaveSurveyComponent>
+            </Grid>
+          </Grid>
+        </Grid>
         {/* Botón de añadir pregunta */}
         {/* <Fab
-            color="primary"
-            aria-label="add"
-            style={{
-              position: 'absolute',
-              bottom: 55,
-              right: 16,
-            }}
-            onClick={handleTypeMenuOpen}
-          >
-            <AddIcon />
-          </Fab> */}
+                color="primary"
+                aria-label="add"
+                style={{
+                  position: 'absolute',
+                  bottom: 55,
+                  right: 16,
+                }}
+                onClick={handleTypeMenuOpen}
+              >
+                <AddIcon />
+              </Fab> */}
 
         {/* <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={() => setAnchorEl(null)}
-          >
-            <MenuItem onClick={() => handleTypeMenuItemClick('text')}>Texto</MenuItem>
-            <MenuItem onClick={() => handleTypeMenuItemClick('multiple choice')}>Selección Múltiple</MenuItem>
-            <MenuItem onClick={() => handleTypeMenuItemClick('unique choice')}>Selección Única</MenuItem>
-            <MenuItem onClick={() => handleTypeMenuItemClick('list')}>Lista</MenuItem>
-            <MenuItem onClick={() => handleTypeMenuItemClick('rating')}>Rating</MenuItem>
-          </Menu> */}
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={() => setAnchorEl(null)}
+              >
+                <MenuItem onClick={() => handleTypeMenuItemClick('text')}>Texto</MenuItem>
+                <MenuItem onClick={() => handleTypeMenuItemClick('multiple choice')}>Selección Múltiple</MenuItem>
+                <MenuItem onClick={() => handleTypeMenuItemClick('unique choice')}>Selección Única</MenuItem>
+                <MenuItem onClick={() => handleTypeMenuItemClick('list')}>Lista</MenuItem>
+                <MenuItem onClick={() => handleTypeMenuItemClick('rating')}>Rating</MenuItem>
+              </Menu> */}
         {/* boton descarga */}
         {/* </Paper> */}
-        <SaveSurveyComponent
-          handleSubmit={handleDownload}></SaveSurveyComponent>
       </Container>
     </>
   );

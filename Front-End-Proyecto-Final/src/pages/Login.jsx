@@ -7,9 +7,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const csrf = () => axios.get("/sanctum/csrf-cookie");
+
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
+      await csrf();
       // si back y front tienen diferentes nombres por ej: "user_mail: email"
       await axios.post("/login", { email, password });
       setEmail("");

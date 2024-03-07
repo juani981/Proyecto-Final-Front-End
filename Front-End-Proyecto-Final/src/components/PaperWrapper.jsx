@@ -12,7 +12,7 @@ export const PaperWrapper = ({ children }) => {
           marginTop: 10,
           marginBottom: 10,
           position: "relative",
-          width: 500,
+          width: "50vw",
           margin: "auto",
         }}
         square={true}>

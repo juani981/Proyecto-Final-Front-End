@@ -9,10 +9,12 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const navigate = useNavigate();
+  const csrf = () => axios.get("/sanctum/csrf-cookie");
 
   const handleRegister = async (event) => {
     event.preventDefault();
     try {
+      await csrf();
       await axios.post("/register", {
         name,
         email,
@@ -23,7 +25,7 @@ const Register = () => {
       setEmail("");
       setPassword("");
       setPasswordConfirmation("");
-      navigate("/");
+      navigate("Home");
     } catch (e) {
       console.log(e);
     }
