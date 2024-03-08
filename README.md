@@ -5,3 +5,5 @@
   --Instalará todas las dependencias que dependen de npm dentro del proyecto
 5.  npm run dev
   --Se creará un servidor Vite en un puerto local, y ya se puede ver en el navegador 
+
+Esto es una pruena 
