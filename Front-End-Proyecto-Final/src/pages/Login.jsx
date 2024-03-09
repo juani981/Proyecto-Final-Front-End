@@ -6,20 +6,23 @@ import { PaperWrapper } from "../components/PaperWrapper";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState("");
   const navigate = useNavigate();
-  const csrf = () => axios.get("/sanctum/csrf-cookie");
+  const csrf = () => axios.get('/sanctum/csrf-cookie');
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    await csrf();
     try {
-      await csrf();
-      // si back y front tienen diferentes nombres por ej: "user_mail: email"
+      // si back y front tienen diferentes nombres usar por ej: "user_mail: email"
       await axios.post("/login", { email, password });
       setEmail("");
       setPassword("");
       navigate("/");
     } catch (e) {
-      console.log(e);
+      if(e.response.status === 422) {
+        setErrors("El correo y/o contraseña no son correctos.");
+      }
     }
   };
 
@@ -64,9 +67,13 @@ const Login = () => {
                     focus-visible:shadow-none
                   "
                 />
-                <div className="flex">
-                  <span className="text-red-400 text-sm m-2 p-2">error</span>
-                </div>
+                {/* {errors.email && (
+                  <div className="flex">
+                    <span className="text-red-400 text-sm m-2 p-2">
+                      {errors.email[0]}
+                    </span>
+                  </div>
+                )} */}
               </div>
               <div className="mb-4">
                 <input
@@ -89,9 +96,13 @@ const Login = () => {
                     focus-visible:shadow-none
                   "
                 />
+                {errors && (
                 <div className="flex">
-                  <span className="text-red-400 text-sm m-2 p-2">error</span>
-                </div>
+                  <span className="text-red-400 text-sm m-2 p-2">
+                    {errors}
+                  </span>
+                </div> 
+                )}
               </div>
               <div className="mb-10">
                 <button
