@@ -9,9 +9,11 @@ import Register from "../pages/Register";
 import QuestionsCreatorComponent from "../pages/encuesta/QuestionsCreator";
 import AnswersSubmitComponent from "../pages/encuesta/AnswersSubmit";
 import SurveyCreatorComponent from "../pages/encuesta/SurveyCreator";
+import useAuthContext from "../context/AuthContext";
 
 const BasicTabs = () => {
   const [value, setValue] = useState(0);
+  const { user, logout } = useAuthContext();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -44,28 +46,41 @@ const BasicTabs = () => {
             onChange={handleChange}
             aria-label="Navigation Bar"
             textColor="inherit">
+            {/* {user ? (<></>) : (<></>) } no funciona con tabs (no acepta fragmentos dentro de tabs) */}
             <Tab
               label="Web Encuestas (Logo placeholder)"
               component={Link}
               to="/pages/Home"
             />
-            <Tab label="Login" component={Link} to="/pages/Login" />
-            <Tab label="Registrar" component={Link} to="/pages/Register" />
-            <Tab
-              label="Crear Encuesta"
+            {!user && <Tab 
+              label="Ingresar" 
+              component={Link} 
+              to="/pages/Login" 
+            />}
+            {user && <Tab 
+              label="Nuevo usuario" 
+              component={Link} 
+              to="/pages/Register" 
+            />}
+            {user && <Tab
+              label="Crear encuesta"
               component={Link}
               to="/pages/encuesta/SurveyCreator"
-            />
-            <Tab
+            />}
+            {user && <Tab
               label="Questions Creator"
               component={Link}
               to="/pages/encuesta/QuestionsCreator"
-            />
-            <Tab
+            />}
+            {user && <Tab
               label="Answers Submit"
               component={Link}
               to="/pages/encuesta/AnswersSubmit"
-            />
+            />}
+            {user && <Tab
+              label="Cerrar sesión"
+              onClick={logout}
+            />}
           </Tabs>
         </Box>
       </div>

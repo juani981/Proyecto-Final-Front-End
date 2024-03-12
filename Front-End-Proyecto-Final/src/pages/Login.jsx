@@ -1,29 +1,16 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "../api/api";
+import { Link } from "react-router-dom";
 import { PaperWrapper } from "../components/PaperWrapper";
+import useAuthContext from "../context/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState("");
-  const navigate = useNavigate();
-  const csrf = () => axios.get('/sanctum/csrf-cookie');
+  const { login, errors } = useAuthContext();
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    await csrf();
-    try {
-      // si back y front tienen diferentes nombres usar por ej: "user_mail: email"
-      await axios.post("/login", { email, password });
-      setEmail("");
-      setPassword("");
-      navigate("/");
-    } catch (e) {
-      if(e.response.status === 422) {
-        setErrors("El correo y/o contraseña no son correctos.");
-      }
-    }
+    login({email, password});
   };
 
   return (
@@ -67,13 +54,13 @@ const Login = () => {
                     focus-visible:shadow-none
                   "
                 />
-                {/* {errors.email && (
+                {errors.password && (
                   <div className="flex">
                     <span className="text-red-400 text-sm m-2 p-2">
-                      {errors.email[0]}
+                      {errors.password[0]}
                     </span>
                   </div>
-                )} */}
+                )}
               </div>
               <div className="mb-4">
                 <input
@@ -96,10 +83,10 @@ const Login = () => {
                     focus-visible:shadow-none
                   "
                 />
-                {errors && (
+                {errors.password && (
                 <div className="flex">
                   <span className="text-red-400 text-sm m-2 p-2">
-                    {errors}
+                    {errors.password[0]}
                   </span>
                 </div> 
                 )}
