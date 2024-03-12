@@ -54,10 +54,10 @@ const Login = () => {
                     focus-visible:shadow-none
                   "
                 />
-                {errors.password && (
+                {errors.email && (
                   <div className="flex">
                     <span className="text-red-400 text-sm m-2 p-2">
-                      {errors.password[0]}
+                      {errors.email[0]}
                     </span>
                   </div>
                 )}
@@ -108,7 +108,7 @@ const Login = () => {
               </div>
             </form>
             <Link
-              to="/forgot-password"
+              to="/pages/Forgot-password"
               className="
                 mb-2
                 inline-block

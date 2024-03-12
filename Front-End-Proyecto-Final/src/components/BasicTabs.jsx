@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import ForgotPassword from "../pages/ForgotPassword";
 import QuestionsCreatorComponent from "../pages/encuesta/QuestionsCreator";
 import AnswersSubmitComponent from "../pages/encuesta/AnswersSubmit";
 import SurveyCreatorComponent from "../pages/encuesta/SurveyCreator";
@@ -23,6 +24,7 @@ const BasicTabs = () => {
     { path: "/pages/Home", element: <Home /> },
     { path: "/pages/Login", element: <Login /> },
     { path: "/pages/Register", element: <Register /> },
+    { path: "/pages/Forgot-password", element: <ForgotPassword/>},
     {
       path: "/pages/encuesta/SurveyCreator",
       element: <SurveyCreatorComponent />,
