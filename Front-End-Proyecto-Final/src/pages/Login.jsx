@@ -108,7 +108,7 @@ const Login = () => {
               </div>
             </form>
             <Link
-              to="/pages/Forgot-password"
+              to="/forgot-password"
               className="
                 mb-2
                 inline-block

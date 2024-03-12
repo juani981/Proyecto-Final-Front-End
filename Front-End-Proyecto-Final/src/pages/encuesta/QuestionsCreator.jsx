@@ -89,7 +89,7 @@ const QuestionsCreatorComponent = () => {
       await csrf();
       await axios.post("/api/encuestas/14/preguntas", QuestionsToSubmit); //14 <- $encuestaId
       // console.log("Succes: ", QuestionsToSubmit);
-      navigate("./Home"); //revisar-> No routes matched location "/pages/encuesta/QuestionsCreator/Home"
+      navigate("/"); //revisar-> No routes matched location "/pages/encuesta/QuestionsCreator/Home"
     } catch (e) {
       console.log(e);
     }

@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword";
 import QuestionsCreatorComponent from "../pages/encuesta/QuestionsCreator";
 import AnswersSubmitComponent from "../pages/encuesta/AnswersSubmit";
 import SurveyCreatorComponent from "../pages/encuesta/SurveyCreator";
@@ -21,10 +22,11 @@ const BasicTabs = () => {
   };
 
   const routes = useRoutes([
-    { path: "/pages/Home", element: <Home /> },
-    { path: "/pages/Login", element: <Login /> },
-    { path: "/pages/Register", element: <Register /> },
-    { path: "/pages/Forgot-password", element: <ForgotPassword/>},
+    { path: "/", element: <Home /> },
+    { path: "/login", element: <Login /> },
+    { path: "/register", element: <Register /> },
+    { path: "/forgot-password", element: <ForgotPassword/>},
+    { path: "/password-reset/:token", element: <ResetPassword/>},
     {
       path: "/pages/encuesta/SurveyCreator",
       element: <SurveyCreatorComponent />,
@@ -52,17 +54,17 @@ const BasicTabs = () => {
             <Tab
               label="Web Encuestas (Logo placeholder)"
               component={Link}
-              to="/pages/Home"
+              to="/"
             />
             {!user && <Tab 
               label="Ingresar" 
               component={Link} 
-              to="/pages/Login" 
+              to="/login" 
             />}
             {user && <Tab 
               label="Nuevo usuario" 
               component={Link} 
-              to="/pages/Register" 
+              to="/register" 
             />}
             {user && <Tab
               label="Crear encuesta"
@@ -82,7 +84,10 @@ const BasicTabs = () => {
             {user && <Tab
               label="Cerrar sesión"
               onClick={logout}
+              component={Link}
+              to="/"
             />}
+            {/* Verificar error al poner un botón dentro de tabs */}
           </Tabs>
         </Box>
       </div>
