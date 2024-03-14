@@ -36,11 +36,12 @@ export const AuthProvider = ({children}) => {
     }
 
     const register = async ({ ...data}) => {
+        logout(); //por el momento no se puede registrar un nuevo usuario sin que cambie la sesión
         await csrf();
         try {
             await axios.post("/register", data);
-            await getUser();
-            navigate("/");
+            // await getUser();
+            navigate("/"); //perfiles de usuarios
           } catch (e) {
             if(e.response.status === 422) {
               setErrors(e.response.data.errors);

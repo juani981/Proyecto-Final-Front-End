@@ -10,7 +10,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import QuestionsCreatorComponent from "../pages/encuesta/QuestionsCreator";
 import AnswersSubmitComponent from "../pages/encuesta/AnswersSubmit";
-import SurveyCreatorComponent from "../pages/encuesta/SurveyCreator";
+import SurveyCreatorComponent from "../pages/encuesta/SurveyCreator";//opción2: SurveyCreator2 
 import useAuthContext from "../context/AuthContext";
 
 const BasicTabs = () => {

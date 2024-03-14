@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { PaperWrapper } from "../components/PaperWrapper";
 import useAuthContext from "../context/AuthContext";
@@ -6,16 +6,24 @@ import useAuthContext from "../context/AuthContext";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const { register, errors } = useAuthContext();
 
+  useEffect(() => {
+    setRole('Editor');
+  }, []);
+
   const handleRegister = async (event) => {
     event.preventDefault();
-    register({name,
-              email,
-              password,
-              passwordConfirmation});
+    register({
+      name,
+      email,
+      role,
+      password,
+      passwordConfirmation
+    });
   };
   return (
     <PaperWrapper>
@@ -96,6 +104,39 @@ const Register = () => {
                 )}
               </div>
               <div className="mb-4">
+                <select
+                  value={role}
+                  // placeholder="Tipo de usuario..."
+                  onChange={(e) => setRole(e.target.value)}
+                  required
+                  className="
+                    bordder-[#E9EDF4]
+                    w-full
+                    rounded-md
+                    border
+                    bg-[#FCFDFE]
+                    py-3
+                    px-5
+                    text-base text-body-color
+                    placeholder-[#ACB6BE]
+                    outline-none
+                    focus:border-primary
+                    focus-visible:shadow-none
+                  "
+                >
+                <option value="Administrador">Administrador</option>
+                <option value="Editor">Editor</option>
+                <option value="Publicador">Publicador</option>
+              </select>
+              {errors.role && (
+                <div className="flex">
+                  <span className="text-red-400 text-sm m-2 p-2">
+                    {errors.role[0]}
+                  </span>
+                </div>
+              )}
+              </div>
+              <div className="mb-4">
                 <input
                   type="password"
                   placeholder="Contraseña"
@@ -158,11 +199,11 @@ const Register = () => {
                     rounded-md
                     text-white
                   ">
-                  Registrarse
+                  Registrar nuevo usuario
                 </button>
               </div>
             </form>
-            <Link
+            {/* <Link
               to="/login"
               className="
                 mb-2
@@ -171,11 +212,11 @@ const Register = () => {
                 hover:text-primary hover:underline
               ">
               Iniciar sesión
-            </Link>
+            </Link> */}
           </div>
         </div>
-      </div>
-    </PaperWrapper>
+      </div >
+    </PaperWrapper >
   );
 };
 
